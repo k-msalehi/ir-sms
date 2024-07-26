@@ -1,0 +1,22 @@
+{
+    "name": "k-msalehi/ir-sms",
+    "description": "A PHP wrapper for Iranian SMS gateways.",
+    "version": "1.0.0",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "KMsalehi\\IrSms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohammad Salehi Koleti",
+            "email": "msalehid97@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}
