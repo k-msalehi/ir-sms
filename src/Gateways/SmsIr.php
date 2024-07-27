@@ -25,7 +25,7 @@ class SmsIr implements PatternSend
     public function sendByPattern(string $patternId,  array $inputs, string $to, ?string $from = null)
     {
         if (empty($from) && empty($this->from)) {
-            throw new SmsException('The sender number is not set');
+            throw new SmsException('The sender number is not set. Please set the sender number in the constructor or pass it as an argument.');
         }
 
         $inputs = array_map(function ($row) {
