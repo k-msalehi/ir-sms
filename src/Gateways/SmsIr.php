@@ -4,22 +4,29 @@ namespace KMsalehi\IrSms\Gateways;
 
 use KMsalehi\IrSms\Config\Config;
 use KMsalehi\IrSms\Contracts\PatternSend;
+use KMsalehi\IrSms\Exceptions\SmsException;
 
 class SmsIr implements PatternSend
 {
     protected $apiKey;
     protected $apiUrl = 'https://api.sms.ir/v1/send';
     protected $apiPatternUrl = 'https://api.sms.ir/v1/send/verify';
+    protected $from;
+    protected $to;
 
-    public function __construct()
+    public function __construct(?string $to = null, ?string $from = null)
     {
-
+        $this->from = $from;
+        $this->to = $to;
         $config = new Config();
         $this->apiKey = $config->getKey('sms.ir');
     }
 
     public function sendByPattern(string $patternId,  array $inputs, string $to, ?string $from = null)
     {
+        if (empty($from) && empty($this->from)) {
+            throw new SmsException('The sender number is not set');
+        }
 
         $inputs = array_map(function ($row) {
             $key = array_keys($row)[0];
@@ -33,7 +40,7 @@ class SmsIr implements PatternSend
             'parameters' => $inputs
         ];
         $messageData = json_encode($messageData, JSON_UNESCAPED_UNICODE);
-   
+
         $curl = curl_init();
         curl_setopt_array(
             $curl,
