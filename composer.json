@@ -18,5 +18,13 @@
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "^10.5"
+    },
+    "scripts": {
+        "pre-update-cmd": [
+            "php -r \"if (file_exists('config/ir-sms-local.php')) copy('config/ir-sms-local.php', 'config/ir-sms-local.bak');\""
+        ],
+        "post-update-cmd": [
+            "php -r \"if (file_exists('config/ir-sms-local.bak')) { copy('config/ir-sms-local.bak', 'config/ir-sms-local.php'); unlink('config/ir-sms-local.bak'); }\""
+        ]
     }
 }
