@@ -8,10 +8,8 @@ class Config
 
     public function __construct()
     {
-        var_dump(file_exists(__DIR__ . '/../../../../config/ir-sms.php'));
-        exit;
-        if (file_exists(__DIR__ . '/../../../../config/ir-sms-local.php')) {
-            $this->config = include __DIR__ . '/../../../../config/ir-sms-local.php';
+        if (file_exists(__DIR__ . '/../../../config/ir-sms.php')) {
+            $this->config = include __DIR__ . '/../../../config/ir-sms.php';
         } else {
             $this->config = include __DIR__ . '/../../config/ir-sms.php';
         }
