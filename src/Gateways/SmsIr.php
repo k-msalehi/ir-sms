@@ -6,6 +6,7 @@ use KMsalehi\IrSms\Config\Config;
 use KMsalehi\IrSms\Contracts\PatternSend;
 use KMsalehi\IrSms\Exceptions\SmsException;
 
+// sms.ir gateway
 class SmsIr implements PatternSend
 {
     protected $apiKey;
@@ -13,6 +14,8 @@ class SmsIr implements PatternSend
     protected $apiPatternUrl = 'https://api.sms.ir/v1/send/verify';
     protected $from;
     protected $to;
+    protected $debug;
+
 
     public function __construct(?string $to = null, ?string $from = null)
     {
@@ -20,6 +23,7 @@ class SmsIr implements PatternSend
         $this->to = $to;
         $config = new Config();
         $this->apiKey = $config->getKey('sms.ir');
+        $this->debug = $config->get('debug');
     }
 
     public function sendByPattern(string $patternId,  array $inputs, string $to, ?string $from = null)
@@ -61,8 +65,16 @@ class SmsIr implements PatternSend
         );
         $response = curl_exec($curl);
         curl_close($curl);
-        var_dump($response);
-        exit;
-        echo $response;
+
+        $decodedResponse = json_decode($response, true);
+
+        if ($decodedResponse['status'] == 1) {
+            return true;
+        } else {
+            if ($this->debug) {
+                throw new SmsException($decodedResponse['message'], $decodedResponse['status'], $response);
+            }
+            return false;
+        }
     }
 }
