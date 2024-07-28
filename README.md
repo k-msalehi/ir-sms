@@ -10,7 +10,7 @@ To install the package, use Composer:
 composer require kmsalehi/ir-sms
 ```
 
-##Configuration
+## Configuration
 
 There is a configuration file in config/ir-sms.php with the following structure:
 
@@ -27,3 +27,8 @@ return [
 ```
 
 You can also create a config/ir-sms-local.php file to override the default configuration.
+
+## Usage
+
+### Sending SMS by Pattern
+To send an SMS using a pattern, use the SmsIr class.
