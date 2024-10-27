@@ -11,7 +11,7 @@ class SmsIr implements PatternSend
 {
     protected $apiKey;
     protected $apiUrl = 'https://api.sms.ir/v1/send';
-    protected $apiPatternUrl = 'https://api.sms.ir/v1/send/verify';
+    protected const apiPatternUrl = 'https://api.sms.ir/v1/send/verify';
     protected $from;
     protected $to;
     protected $debug;
@@ -49,7 +49,7 @@ class SmsIr implements PatternSend
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => $this->apiPatternUrl,
+                CURLOPT_URL => self::apiPatternUrl,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_TIMEOUT => 10,
